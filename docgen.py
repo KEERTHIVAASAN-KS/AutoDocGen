@@ -25,7 +25,7 @@ def codediff():
     repo=git.Repo(os.getcwd())
 
     lastcommit=repo.head.commit 
-    file=open(lastcommit.message.rstrip("\n")+".txt","w")
+    file=open("document.txt","w")
     previouscommit=lastcommit.parents[0]
 
     diffs=previouscommit.diff(lastcommit,create_patch=True)
