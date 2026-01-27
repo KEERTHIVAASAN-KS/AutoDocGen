@@ -17,8 +17,6 @@ def airesult(changes):
 
     
     return res.choices[0].message.content
-   
-
 
 def codediff():
 
@@ -41,5 +39,23 @@ def codediff():
     file.close()
 
 
+def githookscript():
+    if os.path.exists(".git/hooks/post-commit"):
+        file=open(".git/hooks/post-commit","a")
+        script=file.read()
+        if "docgen.py" in script:
+            codediff()
+        else:
+            file.write('\ncd "$(git rev-parse --show-toplevel)" || exit 0\npython3 docgen.py\nexit 0')
+            file.close()
+
+    else:
+        file=open(".git/hooks/post-commit","a")
+        file.write('#!/bin/bash\ncd "$(git rev-parse --show-toplevel)" || exit 0\npython3 docgen.py\nexit 0')
+        file.close()
+
+
+
+
 load_dotenv()
-codediff()
+githookscript()
