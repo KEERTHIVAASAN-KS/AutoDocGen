@@ -2,7 +2,7 @@ import git
 from mistralai.client import Mistral
 import os
 from datetime import datetime
-
+import sys
 
 # PASTE API KEY BELOW
 
@@ -29,7 +29,7 @@ def codediff():
     repo=git.Repo(os.getcwd())
 
     lastcommit=repo.head.commit 
-    file=open("document.txt","a")
+    file=open("document.txt","a",encoding="utf-8")
     previouscommit=lastcommit.parents[0]
 
     
@@ -64,7 +64,14 @@ def githubpipeline():
         file.close()
 
 
+def main():
+    if len(sys.argv)==2:
+        if sys.argv[1]=="--local":
+            codediff()
+    else:
+        githubpipeline()
 
 
+main()
 
-githubpipeline()
+
