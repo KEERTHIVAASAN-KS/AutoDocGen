@@ -66,7 +66,7 @@ def githubpipeline():
 
 def main():
     if len(sys.argv)==2:
-        if sys.argv[1]=="--local":
+        if sys.argv[1]=="--manual":
             codediff()
     else:
         githubpipeline()
